@@ -8,6 +8,8 @@ threads = dependency('threads')
 # Translations
 subdir('po')
 
+pam_module_dir = (get_option('pam-module-dir') != '')? get_option('pam-module-dir') : get_option('prefix') / get_option('libdir') / 'security'
+
 shared_library(
 	'pam_howdy',
 	'main.cc',
@@ -19,6 +21,6 @@ shared_library(
 		libevdev,
 	],
 	install: true,
-	install_dir: '/lib/security',
+	install_dir: pam_module_dir,
 	name_prefix: ''
 )
