@@ -1,0 +1,7 @@
+[Unit]
+Description=Howdy daemon
+
+[Service]
+Type=dbus
+BusName=nl.boltgolt.Howdy
+ExecStart=/usr/libexec/howdyd

@@ -1,0 +1,5 @@
+[D-BUS Service]
+Name=nl.boltgolt.Howdy
+Exec=/usr/libexec/howdyd
+User=root
+SystemdService=howdyd.service

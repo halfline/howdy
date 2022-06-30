@@ -1,0 +1,11 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN"
+                      "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+  <interface name="nl.boltgolt.Howdy.Device">
+    <property type="ay" name="DevicePath" access="read"/>
+    <property type="s" name="DeviceName" access="read"/>
+    <property type="b" name="IsInfrared" access="read"/>
+    <property type="b" name="IsDefault" access="read"/>
+    <method name="SetDefault"/>
+  </interface>
+</node>

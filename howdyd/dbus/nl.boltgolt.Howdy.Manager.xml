@@ -1,0 +1,27 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN"
+                      "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+  <interface name="nl.boltgolt.Howdy.Manager">
+    <method name="GetDevices">
+      <arg type="ao" name="devices" direction="out"/>
+    </method>
+    <method name="GetPreferredDevice">
+      <arg type="o" name="device" direction="out"/>
+    </method>
+    <method name="GetConfiguredDevice">
+      <arg type="o" name="device" direction="out"/>
+    </method>
+    <method name="GetScans">
+      <arg type="s" name="username" direction="in"/>
+      <arg type="ao" name="scans" direction="out"/>
+    </method>
+    <method name="TakeScan">
+      <arg type="s" name="username" direction="in"/>
+      <arg type="s" name="name" direction="in"/>
+      <arg type="o" name="scan" direction="out"/>
+    </method>
+    <method name="DeleteScans">
+      <arg type="s" name="username" direction="in"/>
+    </method>
+  </interface>
+</node>
