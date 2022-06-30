@@ -44,22 +44,22 @@ def init_detector(lock):
 	global face_detector, pose_predictor, face_encoder
 
 	# Test if at lest 1 of the data files is there and abort if it's not
-	if not os.path.isfile(PATH + "/dlib-data/shape_predictor_5_face_landmarks.dat"):
+	if not os.path.isfile(os.path.join(data_path,"shape_predictor_5_face_landmarks.dat")):
 		print(_("Data files have not been downloaded, please run the following commands:"))
-		print("\n\tcd " + PATH + "/dlib-data")
+		print("\n\tcd " + data_path)
 		print("\tsudo ./install.sh\n")
 		lock.release()
 		exit(1)
 
 	# Use the CNN detector if enabled
 	if use_cnn:
-		face_detector = dlib.cnn_face_detection_model_v1(PATH + "/dlib-data/mmod_human_face_detector.dat")
+		face_detector = dlib.cnn_face_detection_model_v1(os.path.join(data_path, "mmod_human_face_detector.dat"))
 	else:
 		face_detector = dlib.get_frontal_face_detector()
 
 	# Start the others regardless
-	pose_predictor = dlib.shape_predictor(PATH + "/dlib-data/shape_predictor_5_face_landmarks.dat")
-	face_encoder = dlib.face_recognition_model_v1(PATH + "/dlib-data/dlib_face_recognition_resnet_model_v1.dat")
+	pose_predictor = dlib.shape_predictor(os.path.join(data_path, "shape_predictor_5_face_landmarks.dat"))
+	face_encoder = dlib.face_recognition_model_v1(os.path.join(data_path, "dlib_face_recognition_resnet_model_v1.dat"))
 
 	# Note the time it took to initialize detectors
 	timings["ll"] = time.time() - timings["ll"]
@@ -100,7 +100,9 @@ if len(sys.argv) < 2:
 	exit(12)
 
 # Get the absolute path to the current directory
-PATH = os.path.abspath(__file__ + "/..")
+config_path = os.path.join("/etc/howdy", "config.ini")
+model_path = os.path.join("/var/lib/howdy", "models")
+data_path = os.path.join("/var/lib/howdy", "dlib-data")
 
 # The username of the user being authenticated
 user = sys.argv[1]
@@ -125,7 +127,7 @@ face_encoder = None
 
 # Try to load the face model from the models folder
 try:
-	models = json.load(open(PATH + "/models/" + user + ".dat"))
+	models = json.load(open(os.path.join(model_path, f"{user}.dat")))
 
 	for model in models:
 		encodings += model["data"]
@@ -138,7 +140,7 @@ if len(models) < 1:
 
 # Read config from disk
 config = configparser.ConfigParser()
-config.read(PATH + "/config.ini")
+config.read(config_path)
 
 # Get all config values needed
 use_cnn = config.getboolean("core", "use_cnn", fallback=False)

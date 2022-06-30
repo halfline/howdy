@@ -9,12 +9,11 @@ from recorders.video_capture import VideoCapture
 
 from i18n import _
 
-# Get the absolute path to the current directory
-path = os.path.abspath(__file__ + "/..")
+config_path = os.path.join("/etc/howdy", "config.ini")
 
 # Read the config
 config = configparser.ConfigParser()
-config.read(path + "/../config.ini")
+config.read(config_path)
 
 # Start video capture
 video_capture = VideoCapture(config)

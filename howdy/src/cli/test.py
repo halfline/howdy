@@ -11,12 +11,12 @@ from recorders.video_capture import VideoCapture
 
 from i18n import _
 
-# Get the absolute path to the current file
-path = os.path.dirname(os.path.abspath(__file__))
+config_path = os.path.join("/etc/howdy", "config.ini")
+data_path = os.path.join("/var/lib/howdy", "dlib-data")
 
 # Read config from disk
 config = configparser.ConfigParser()
-config.read(path + "/../config.ini")
+config.read(config_path)
 
 if config.get("video", "recording_plugin") != "opencv":
 	print(_("Howdy has been configured to use a recorder which doesn't support the test command yet, aborting"))
@@ -54,8 +54,7 @@ def print_text(line_number, text):
 use_cnn = config.getboolean('core', 'use_cnn', fallback=False)
 
 if use_cnn:
-	face_detector = dlib.cnn_face_detection_model_v1(
-		path + "/../dlib-data/mmod_human_face_detector.dat"
+	face_detector = dlib.cnn_face_detection_model_v1(os.path.join(data_path, "mmod_human_face_detector.dat")
 	)
 else:
 	face_detector = dlib.get_frontal_face_detector()
