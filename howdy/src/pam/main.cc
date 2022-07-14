@@ -46,7 +46,7 @@ const auto DEFAULT_TIMEOUT =
     std::chrono::duration<int, std::chrono::milliseconds::period>(100);
 const auto MAX_RETRIES = 5;
 const auto PYTHON_EXECUTABLE = "python3";
-const auto COMPARE_PROCESS_PATH = "/lib/security/howdy/compare.py";
+const auto COMPARE_PROCESS_PATH = "/usr/lib64/howdy/compare.py";
 
 #define S(msg) gettext(msg)
 
@@ -193,7 +193,7 @@ auto check_enabled(const INIReader &config) -> int {
  */
 auto identify(pam_handle_t *pamh, int flags, int argc, const char **argv,
               bool auth_tok) -> int {
-  INIReader config("/lib/security/howdy/config.ini");
+  INIReader config("/etc/howdy/config.ini");
   openlog("pam_howdy", 0, LOG_AUTHPRIV);
 
   // Error out if we could not read the config file
